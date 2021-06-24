@@ -57,16 +57,22 @@ namespace HotelRooms_REST_EF.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Hotel>> Get()
+        public ActionResult<IEnumerable<HotelDto>> Get()
         {
             return Ok(_service.GetHotels());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Hotel> Get([FromRoute] int id)
+        public ActionResult<HotelDto> Get([FromRoute] int id)
         {
             var hotel = _service.GetHotelById(id); ;
             return hotel != null ? Ok(hotel) : NotFound();
+        }
+
+        [HttpGet("room/{id}")]
+        public ActionResult<RoomDto> GetRoom([FromRoute] int id)
+        {
+            return Ok(_service.GetRoomById(id));
         }
 
         [HttpPut("{id}")]

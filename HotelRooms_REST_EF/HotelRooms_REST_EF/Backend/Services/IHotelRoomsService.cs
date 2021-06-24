@@ -17,6 +17,8 @@ namespace HotelRooms_REST_EF.Backend.Services
 
         IEnumerable<HotelDto> GetHotels();
 
+        RoomDto GetRoomById(int id);
+
         bool UpdateHotel(int id, UpdateHotelDto dto);
 
         bool UpdateRoom(int id, UpdateRoomDto dto);

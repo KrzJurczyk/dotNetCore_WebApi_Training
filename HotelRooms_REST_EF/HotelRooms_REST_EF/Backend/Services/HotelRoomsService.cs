@@ -77,6 +77,11 @@ namespace HotelRooms_REST_EF.Backend.Services
             return _mapper.Map<IEnumerable<HotelDto>>(_dbContext.Hotels.Include(r => r.Rooms).ToList());
         }
 
+        public RoomDto GetRoomById(int id)
+        {
+            return _mapper.Map<RoomDto>(_dbContext.Rooms.FirstOrDefault(r => r.Id == id));
+        }
+
         public bool UpdateHotel(int id, UpdateHotelDto dto)
         {
             var hotel = _dbContext.Hotels.FirstOrDefault(h => h.Id == id);
