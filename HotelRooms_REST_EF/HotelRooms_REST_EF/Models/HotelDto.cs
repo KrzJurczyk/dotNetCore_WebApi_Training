@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HotelRooms_REST_EF.Models
 {
-    public class Hotel
+    public class HotelDto
     {
         public int Id { get; set; }
 
@@ -13,6 +13,6 @@ namespace HotelRooms_REST_EF.Models
 
         public string Owner { get; set; }
 
-        public List<Room> Rooms { get; set; }
+        public List<RoomDto> Rooms { get; set; }
     }
 }

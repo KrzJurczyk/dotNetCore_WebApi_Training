@@ -1,4 +1,5 @@
 using HotelRooms_REST_EF.Backend.Data;
+using HotelRooms_REST_EF.Backend.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,8 @@ namespace HotelRooms_REST_EF
             services.AddControllers();
             services.AddDbContext<HotelDbContext>();
             services.AddScoped<HotelSeeder>();
+            services.AddAutoMapper(GetType().Assembly);
+            services.AddScoped<IHotelRoomsService, HotelRoomsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
