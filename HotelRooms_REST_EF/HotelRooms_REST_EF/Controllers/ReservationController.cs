@@ -1,6 +1,7 @@
 ﻿using HotelRooms_REST_EF.Backend.Services;
 using HotelRooms_REST_EF.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace HotelRooms_REST_EF.Controllers
 {
@@ -16,7 +17,7 @@ namespace HotelRooms_REST_EF.Controllers
         }
 
         [HttpPost("{roomId}")]
-        public ActionResult CreateReservation([FromBody] ReservationDto reservationDto, [FromRoute] int roomId)
+        public async Task<ActionResult> CreateReservation([FromBody] ReservationDto reservationDto, [FromRoute] int roomId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -30,7 +31,7 @@ namespace HotelRooms_REST_EF.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Reservation> Get([FromRoute] int id)
+        public async Task<ActionResult<Reservation>> Get([FromRoute] int id)
         {
             var reservation = _service.GetReservationById(id);
             return reservation != null ? Ok(reservation) : NotFound();

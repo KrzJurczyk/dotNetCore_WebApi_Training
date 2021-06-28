@@ -3,12 +3,13 @@ using HotelRooms_REST_EF.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HotelRooms_REST_EF.Controllers
 {
     [ApiController]
     [Route("api/hotelrooms/rooms")]
-    public class RoomController : ControllerBase
+    public class RoomController : Controller
     {
         private readonly ILogger<HotelRoomsController> _logger;
 
@@ -21,7 +22,7 @@ namespace HotelRooms_REST_EF.Controllers
         }
 
         [HttpPost("{id}")]
-        public ActionResult CreateRoom([FromRoute] int id, [FromBody] RoomDto roomDto)
+        public async Task<ActionResult> CreateRoom([FromRoute] int id, [FromBody] RoomDto roomDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -34,25 +35,25 @@ namespace HotelRooms_REST_EF.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteRoom([FromRoute] int id)
+        public async Task<ActionResult> DeleteRoom([FromRoute] int id)
         {
             return _service.DeleteRoom(id) ? NoContent() : NotFound();
         }
 
         [HttpGet("find/{hotelId}")]
-        public ActionResult<IEnumerable<RoomDto>> GetAvailableRooms(int hotelId, int beds, int checkIn_YY, int checkIn_MM, int checkIn_DD, int checkOut_YY, int checkOut_MM, int checkOut_DD)
+        public async Task<ActionResult<IEnumerable<RoomDto>>> GetAvailableRooms(int hotelId, int beds, int checkIn_YY, int checkIn_MM, int checkIn_DD, int checkOut_YY, int checkOut_MM, int checkOut_DD)
         {
             return Ok(_service.GetAvailableRooms(hotelId, beds, checkIn_YY, checkIn_MM, checkIn_DD, checkOut_YY, checkOut_MM, checkOut_DD));
         }
 
         [HttpGet("{id}")]
-        public ActionResult<RoomDto> GetRoom([FromRoute] int id)
+        public async Task<ActionResult<RoomDto>> GetRoom([FromRoute] int id)
         {
             return Ok(_service.GetRoomById(id));
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateRoom([FromRoute] int id, [FromBody] UpdateRoomDto dto)
+        public async Task<ActionResult> UpdateRoom([FromRoute] int id, [FromBody] UpdateRoomDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

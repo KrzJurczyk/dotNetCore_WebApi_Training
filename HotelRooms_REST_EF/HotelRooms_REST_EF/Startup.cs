@@ -2,6 +2,7 @@ using HotelRooms_REST_EF.Backend.Data;
 using HotelRooms_REST_EF.Backend.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,7 +22,7 @@ namespace HotelRooms_REST_EF
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<HotelDbContext>();
+            services.AddDbContext<HotelDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("HotelRoomsAPI")));
             services.AddScoped<HotelSeeder>();
             services.AddAutoMapper(GetType().Assembly);
             services.AddScoped<IHotelRoomsService, HotelRoomsService>();

@@ -3,12 +3,13 @@ using HotelRooms_REST_EF.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace HotelRooms_REST_EF.Controllers
 {
     [ApiController]
     [Route("api/hotelrooms")]
-    public class HotelRoomsController : ControllerBase
+    public class HotelRoomsController : Controller
     {
         private readonly ILogger<HotelRoomsController> _logger;
 
@@ -21,7 +22,7 @@ namespace HotelRooms_REST_EF.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateHotel([FromBody] HotelDto hotelDto)
+        public async Task<ActionResult> CreateHotel([FromBody] HotelDto hotelDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -32,26 +33,26 @@ namespace HotelRooms_REST_EF.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteHotel([FromRoute] int id)
+        public async Task<ActionResult> DeleteHotel([FromRoute] int id)
         {
             return _service.DeleteHotel(id) ? NoContent() : NotFound();
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<HotelDto>> Get()
+        public async Task<ActionResult<IEnumerable<HotelDto>>> Get()
         {
             return Ok(_service.GetHotels());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<HotelDto> Get([FromRoute] int id)
+        public async Task<ActionResult<HotelDto>> Get([FromRoute] int id)
         {
             var hotel = _service.GetHotelById(id); ;
             return hotel != null ? Ok(hotel) : NotFound();
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateHotel([FromRoute] int id, [FromBody] UpdateHotelDto dto)
+        public async Task<ActionResult> UpdateHotel([FromRoute] int id, [FromBody] UpdateHotelDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

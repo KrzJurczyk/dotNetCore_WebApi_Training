@@ -5,17 +5,15 @@ namespace HotelRooms_REST_EF.Backend.Data
 {
     public class HotelDbContext : DbContext
     {
-        private string _connectionString =
-                                            @"Server=(localdb)\mssqllocaldb;Database=HotelDb;Trusted_Connection=True;";
-
         public DbSet<Hotel> Hotels { get; set; }
 
         public DbSet<Reservation> Reservations { get; set; }
 
         public DbSet<Room> Rooms { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        public HotelDbContext(DbContextOptions<HotelDbContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer(_connectionString);
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
