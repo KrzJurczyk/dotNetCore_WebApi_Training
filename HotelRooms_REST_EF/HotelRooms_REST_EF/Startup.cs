@@ -1,4 +1,5 @@
 using HotelRooms_REST_EF.Backend.Data;
+using HotelRooms_REST_EF.Backend.Middlewares;
 using HotelRooms_REST_EF.Backend.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,7 @@ namespace HotelRooms_REST_EF
             services.AddScoped<IHotelRoomsService, HotelRoomsService>();
             services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<MyErrorHandlingMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +42,8 @@ namespace HotelRooms_REST_EF
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<MyErrorHandlingMiddleware>();
 
             app.UseHttpsRedirection();
 
