@@ -1,4 +1,5 @@
 ﻿using HotelRooms_REST_EF.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,8 +31,19 @@ namespace HotelRooms_REST_EF.Backend.Data
                 Rooms = new List<Room>()
                 {
                     CreateRoom($"{name}_1", 2),
-                    CreateRoom($"{name}_2", 4)
+                    CreateRoom($"{name}_2", 4),
                 }
+            };
+        }
+
+        private static Reservation CreateReservation(string name)
+        {
+            var dt = DateTime.Today;
+            return new Reservation()
+            {
+                Name = name + "_reservation",
+                CheckIn = dt,
+                CheckOut = dt
             };
         }
 
@@ -39,14 +51,14 @@ namespace HotelRooms_REST_EF.Backend.Data
         {
             return new Room()
             {
-                Available = true,
-                CheckIn = "",
-                CheckOut = "",
                 Name = name,
-                NumberOfBeds = beds
+                NumberOfBeds = beds,
+                Reservations = new List<Reservation>()
+                {
+                    CreateReservation(name)
+                }
             };
         }
-
         private static IEnumerable<Hotel> GetData()
         {
             return new List<Hotel>()

@@ -31,29 +31,10 @@ namespace HotelRooms_REST_EF.Controllers
             return Created($"api/hotelrooms/{hotel.Id}", null);
         }
 
-        [HttpPost("{id}")]
-        public ActionResult CreateRoom([FromRoute] int id, [FromBody] RoomDto roomDto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var room = _service.CreateRoom(id, roomDto);
-            if (room == null)
-                NotFound();
-
-            return Created($"api/hotelrooms/{id}/{room.Id}", null);
-        }
-
         [HttpDelete("{id}")]
         public ActionResult DeleteHotel([FromRoute] int id)
         {
             return _service.DeleteHotel(id) ? NoContent() : NotFound();
-        }
-
-        [HttpDelete("room/{id}")]
-        public ActionResult DeleteRoom([FromRoute] int id)
-        {
-            return _service.DeleteRoom(id) ? NoContent() : NotFound();
         }
 
         [HttpGet]
@@ -69,12 +50,6 @@ namespace HotelRooms_REST_EF.Controllers
             return hotel != null ? Ok(hotel) : NotFound();
         }
 
-        [HttpGet("room/{id}")]
-        public ActionResult<RoomDto> GetRoom([FromRoute] int id)
-        {
-            return Ok(_service.GetRoomById(id));
-        }
-
         [HttpPut("{id}")]
         public ActionResult UpdateHotel([FromRoute] int id, [FromBody] UpdateHotelDto dto)
         {
@@ -82,15 +57,6 @@ namespace HotelRooms_REST_EF.Controllers
                 return BadRequest(ModelState);
 
             return _service.UpdateHotel(id, dto) ? Ok() : NotFound();
-        }
-
-        [HttpPut("room/{id}")]
-        public ActionResult UpdateRoom([FromRoute] int id, [FromBody] UpdateRoomDto dto)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            return _service.UpdateRoom(id, dto) ? Ok() : NotFound();
         }
     }
 }

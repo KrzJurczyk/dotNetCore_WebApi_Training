@@ -10,8 +10,9 @@ namespace HotelRooms_REST_EF.Backend.Data
 
         public DbSet<Hotel> Hotels { get; set; }
 
-        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
 
+        public DbSet<Room> Rooms { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString);
@@ -20,7 +21,10 @@ namespace HotelRooms_REST_EF.Backend.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Hotel>().Property(h => h.Name).IsRequired().HasMaxLength(40);
-            modelBuilder.Entity<Room>().Property(h => h.Name).IsRequired().HasMaxLength(20);
+            modelBuilder.Entity<Room>().Property(r => r.Name).IsRequired().HasMaxLength(20);
+            modelBuilder.Entity<Reservation>().Property(r => r.Name).IsRequired().HasMaxLength(60);
+            modelBuilder.Entity<Reservation>().Property(r => r.CheckIn).IsRequired();
+            modelBuilder.Entity<Reservation>().Property(r => r.CheckOut).IsRequired();
 
             // Requires additional migration ect, better to use a HotelSeeder
             //modelBuilder.Entity<Hotel>().HasData(

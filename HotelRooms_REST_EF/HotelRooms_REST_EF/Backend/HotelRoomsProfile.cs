@@ -9,6 +9,7 @@ namespace HotelRooms_REST_EF.Backend
         {
             CreateMap<Hotel, HotelDto>().ReverseMap();
             CreateMap<Room, RoomDto>().ReverseMap();
+            CreateMap<Reservation, ReservationDto>().ReverseMap();
         }
     }
 }

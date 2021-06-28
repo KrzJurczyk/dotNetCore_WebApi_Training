@@ -25,6 +25,8 @@ namespace HotelRooms_REST_EF
             services.AddScoped<HotelSeeder>();
             services.AddAutoMapper(GetType().Assembly);
             services.AddScoped<IHotelRoomsService, HotelRoomsService>();
+            services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IRoomService, RoomService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
