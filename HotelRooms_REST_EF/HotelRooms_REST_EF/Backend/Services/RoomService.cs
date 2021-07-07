@@ -49,8 +49,8 @@ namespace HotelRooms_REST_EF.Backend.Services
 
         public IEnumerable<RoomDto> GetAvailableRooms(int hotelId, int beds, int checkIn_YY, int checkIn_MM, int checkIn_DD, int checkOut_YY, int checkOut_MM, int checkOut_DD)
         {
-            var rooms = _dbContext.Rooms.Include(r => r.Reservations).Where(r => r.HotelId == hotelId).ToList()
-                .Where(r => r.NumberOfBeds == beds && r.Reservations.All(d => IsAvailable(d, checkIn_YY, checkIn_MM, checkIn_DD, checkOut_YY, checkOut_MM, checkOut_DD))).ToList();
+            var rooms = _dbContext.Rooms.Include(r => r.Reservations).Where(r => r.HotelId == hotelId).Where(r => r.NumberOfBeds == beds).ToList()
+                .Where(r => r.Reservations.All(d => IsAvailable(d, checkIn_YY, checkIn_MM, checkIn_DD, checkOut_YY, checkOut_MM, checkOut_DD)));
 
             return _mapper.Map<IEnumerable<RoomDto>>(rooms);
         }
@@ -77,6 +77,8 @@ namespace HotelRooms_REST_EF.Backend.Services
 
         private static bool IsAvailable(Reservation r, int ciy, int cim, int cid, int coy, int com, int cod)
         {
+            if (r == null)
+                return true;
             var checkIn = new DateTime(ciy, cim, cid);
             var checkOut = new DateTime(coy, com, cod);
             var before = checkOut <= r.CheckIn;
